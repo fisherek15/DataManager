@@ -23,19 +23,45 @@ public class Employee {
         this.departmentNr = departmentNr;
     }
 
-    public static void readFromTextFile(String fullPath, List<Employee> employees){
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", salary=" + salary +
+                ", gender='" + gender + '\'' +
+                ", departmentNr=" + departmentNr +
+                '}';
+    }
+
+    public static int readFromTextFile(String fullPath, List<Employee> employees){
         
         File file = new File(fullPath);
         String line;
+        int linesQuantity = 0;
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
-            while((line = br.readLine()) != null){
+            while((line = br.readLine()) != null && linesQuantity < 100){
                 String[] elements = line.split(" ");
-                employees.add(new Employee(elements[0], elements[1], Double.valueOf(elements[2]), elements[3], Integer.valueOf(elements[4])));
+                employees.add(new Employee(elements[0], elements[1], Double.parseDouble(elements[2]), elements[3], Integer.parseInt(elements[4])));
+                linesQuantity++;
             }
         } catch (Exception e){
             e.printStackTrace();
         }
+        return linesQuantity;
+    }
+
+    public static double averageSalary(List<Employee> employees, int departmentNr, String gender){
+        double sumSalary = 0;
+        int counter = 0;
+        for (Employee employee : employees) {
+            if(employee.departmentNr == departmentNr && employee.gender.equals(gender)){
+                sumSalary += employee.salary;
+                counter++;
+            }
+        }
+        return sumSalary / counter;
     }
 }
