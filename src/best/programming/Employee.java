@@ -3,17 +3,15 @@ package best.programming;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Employee {
 
-    private String firstName;
-    private String lastName;
-    private double salary;
-    private String gender;
-    private int departmentNr;
+    private final String firstName;
+    private final String lastName;
+    private final double salary;
+    private final String gender;
+    private final int departmentNr;
 
     public Employee(String firstName, String lastName, double salary, String gender, int departmentNr) {
         this.firstName = firstName;
