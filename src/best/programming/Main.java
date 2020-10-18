@@ -8,6 +8,7 @@ public class Main {
     public static void main(String[] args) {
 
         List<Employee> employees = new ArrayList<>();
+
         String path = "E:\\INFORMATICS\\Projects_Java_2\\DataManager\\";
         String fileName1 = "data.txt";
         int linesQuantity = Employee.readFromTextFile(path+fileName1, employees);
@@ -16,5 +17,9 @@ public class Main {
         System.out.println(avgSalary);
         String fileName2 = "serializedObjs";
         Employee.saveSerializedObjToFile(path+fileName2, employees);
+        List<Employee> newEmployees = Employee.readSerializedObjFromFile(path+fileName2);
+        for(Employee employee : newEmployees){
+            System.out.println(employee.toString());
+        }
     }
 }

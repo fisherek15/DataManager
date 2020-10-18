@@ -1,6 +1,7 @@
 package best.programming;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Employee implements Serializable {
@@ -64,15 +65,13 @@ public class Employee implements Serializable {
     public static void saveSerializedObjToFile(String fileName, List<Employee> employees){
 
         try {
-            FileOutputStream fos = new FileOutputStream(fileName);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            FileOutputStream file = new FileOutputStream(fileName);
+            ObjectOutputStream out = new ObjectOutputStream(file);
 
-            for(Employee employee : employees) {
-                oos.writeObject(employee);
-            }
+            out.writeObject(employees);
 
-            oos.close();
-            fos.close();
+            out.close();
+            file.close();
 
             System.out.println("Object has been serialized");
         } catch (IOException ex){
@@ -80,21 +79,28 @@ public class Employee implements Serializable {
         }
     }
 
-    public static void readSerializedObjFromFile(String fileName, List<Employee> employees){
+    public static List<Employee> readSerializedObjFromFile(String fileName){
+
+        List<Employee> employees = new ArrayList<>();
 
         try {
-            FileInputStream fis = new FileInputStream(fileName);
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            FileInputStream file = new FileInputStream(fileName);
+            ObjectInputStream in = new ObjectInputStream(file);
 
-            Employee employee;
-            while (ois.readObject() != null) {
-                //todo
-            }
+            employees = (ArrayList) in.readObject();
+
+            in.close();
+            file.close();
+
+            System.out.println("Object has been deserialized");
+
         } catch(IOException ex){
-            System.out.println("IOExecption is caught");
+            System.out.println("IOException is caught");
         }
         catch(ClassNotFoundException ex){
             System.out.println("ClassNotFoundException is caught");
         }
+
+        return employees;
     }
 }
