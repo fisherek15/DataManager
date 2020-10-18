@@ -1,11 +1,9 @@
 package best.programming;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.List;
 
-public class Employee {
+public class Employee implements Serializable {
 
     private final String firstName;
     private final String lastName;
@@ -61,5 +59,42 @@ public class Employee {
             }
         }
         return sumSalary / counter;
+    }
+
+    public static void saveSerializedObjToFile(String fileName, List<Employee> employees){
+
+        try {
+            FileOutputStream fos = new FileOutputStream(fileName);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            for(Employee employee : employees) {
+                oos.writeObject(employee);
+            }
+
+            oos.close();
+            fos.close();
+
+            System.out.println("Object has been serialized");
+        } catch (IOException ex){
+            System.out.println("IOException is caught");
+        }
+    }
+
+    public static void readSerializedObjFromFile(String fileName, List<Employee> employees){
+
+        try {
+            FileInputStream fis = new FileInputStream(fileName);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            Employee employee;
+            while (ois.readObject() != null) {
+                //todo
+            }
+        } catch(IOException ex){
+            System.out.println("IOExecption is caught");
+        }
+        catch(ClassNotFoundException ex){
+            System.out.println("ClassNotFoundException is caught");
+        }
     }
 }
